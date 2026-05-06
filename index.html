@@ -55,12 +55,17 @@
             padding: 10px 18px;
             border-radius: 8px 8px 0 0;
             font-size: 15px;
+            transition: 0.2s;
         }
 
         nav a.active {
             background-color: #1a1a1a;
             color: white;
             border-bottom: 3px solid #00a844;
+        }
+
+        nav a:hover {
+            color: white;
         }
 
         /* Conteúdo Principal */
@@ -132,10 +137,12 @@
             cursor: pointer;
             width: 100%;
             margin-top: 10px;
+            transition: 0.2s;
         }
 
         .btn:hover {
             background-color: #00c250;
+            transform: scale(1.01);
         }
 
         /* Status e Tags */
@@ -168,6 +175,18 @@
             color: white;
         }
 
+        /* ESTILO DAS PATENTES COLORIDAS */
+        .patente-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0px 0px 3px rgba(0,0,0,0.3);
+            white-space: nowrap;
+        }
+
         /* Tabela/Histórico */
         .table-row {
             display: grid;
@@ -191,11 +210,11 @@
         <div class="logo">EB</div>
         <div class="title">Promoções</div>
         <nav>
-            <a href="#" class="active">Dashboard</a>
-            <a href="#">Promoção</a>
-            <a href="#">Atípica</a>
-            <a href="#">Rebaixamento</a>
-            <a href="#">Histórico</a>
+            <a href="#" class="active" data-page="dashboard">Dashboard</a>
+            <a href="#" data-page="promocao">Promoção</a>
+            <a href="#" data-page="atipica">Atípica</a>
+            <a href="#" data-page="rebaixamento">Rebaixamento</a>
+            <a href="#" data-page="historico">Histórico</a>
         </nav>
     </div>
 
@@ -225,7 +244,9 @@
             <h3>Grupo: Exercito Brasileiro</h3>
             <div class="info-row">
                 <span class="label">Patente</span>
-                <span class="value">[GEN BDA] General de Brigada</span>
+                <span class="value">
+                    <span class="patente-tag" style="background-color: #FFA726;">[GEN BDA] General de Brigada</span>
+                </span>
             </div>
             <div class="info-row">
                 <span class="label">CGEx</span>
@@ -241,8 +262,120 @@
             </div>
         </div>
 
-        <button class="btn">Sair</button>
+        <button class="btn" id="btnSair">Sair</button>
     </div>
+
+<script>
+    // ==============================================
+    // LISTA DE TODAS AS PATENTES COM SUAS CORES
+    // ==============================================
+    const patentes = [
+        { cod: "CADETE", nome: "Cadete", cor: "#B0BEC5" },
+        { cod: "ASP", nome: "Aspirante a Oficial", cor: "#BA68C8" },
+        { cod: "1-TEN", nome: "Primeiro Tenente", cor: "#BA68C8" },
+        { cod: "2-TEN", nome: "Segundo Tenente", cor: "#BA68C8" },
+        { cod: "CAP", nome: "Capitão", cor: "#EF5350" },
+        { cod: "MAJ", nome: "Major", cor: "#FFEE58", colorText: "#000" },
+        { cod: "TEN-CEL", nome: "Tenente Coronel", cor: "#FFEE58", colorText: "#000" },
+        { cod: "CEL", nome: "Coronel", cor: "#FFEE58", colorText: "#000" },
+        { cod: "GEN-BDA", nome: "General de Brigada", cor: "#FFA726" },
+        { cod: "GEN-DIV", nome: "General de Divisão", cor: "#FFA726" },
+        { cod: "GEN-EX", nome: "General de Exército", cor: "#FFA726" },
+        { cod: "EM", nome: "Elite Militar", cor: "#6C5CE7" },
+        { cod: "ES", nome: "Elite Secreta", cor: "#81D4FA", colorText: "#000" },
+        { cod: "ER", nome: "Elite Real", cor: "#F48FB1" },
+        { cod: "CMDT", nome: "Comandante", cor: "#E53935" },
+        { cod: "SUB-COM", nome: "Subcomandante", cor: "#E53935" },
+        { cod: "PRES", nome: "Presidente", cor: "#455A64" },
+        { cod: "VICE", nome: "Vice Presidente", cor: "#455A64" },
+        { cod: "MA", nome: "Manager", cor: "#29B6F6" },
+        { cod: "SC", nome: "Sócios", cor: "#29B6F6" },
+        { cod: "CREATOR", nome: "Criador", cor: "#FFD600", colorText: "#000" },
+        { cod: "SUB-CRIADOR", nome: "Sub Criadores", cor: "#FFD600", colorText: "#000" }
+    ];
+
+    // ==============================================
+    // REGRAS DE QUEM PODE PROMOVER ATÉ QUEM
+    // ==============================================
+    const regrasPermissao = {
+        "ASP": 0,      // Aspirante promove só até Cadete
+        "1-TEN": 1,    // Primeiro Tenente promove até Aspirante
+        "2-TEN": 2,    // Segundo Tenente promove até 1º Tenente
+        "CAP": 3,      // Capitão promove até 2º Tenente
+        "MAJ": 4,      // Major promove até Capitão
+        "TEN-CEL": 5,  // Tenente Coronel promove até Major
+        "CEL": 6,      // Coronel promove até Tenente Coronel
+        "GEN-BDA": 7,  // General de Brigada promove até Coronel
+        "GEN-DIV": 8,  // General de Divisão promove até Gen de Brigada
+        "GEN-EX": 9,   // General de Exército promove até Gen de Divisão
+        "EM": 10,      // Elite Militar promove até Gen de Exército
+        "ES": 11,      // Elite Secreta promove até Elite Militar
+        "ER": 12,      // Elite Real promove até Elite Secreta
+        "CMDT": 99,    // Comandante pode TUDO
+        "PRES": 99,    // Presidente pode TUDO
+        "MA": 99,      // Manager pode TUDO
+        "CREATOR": 99, // Criador pode TUDO
+        "SUB-CRIADOR": 99
+    };
+
+    // ==============================================
+    // FUNÇÕES DO SISTEMA
+    // ==============================================
+    
+    // Mudar página no menu
+    document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Remove active de todos
+            document.querySelectorAll('nav a').forEach(el => el.classList.remove('active'));
+            
+            // Adiciona no clicado
+            this.classList.add('active');
+
+            // Atualiza título da página
+            const pagina = this.getAttribute('data-page');
+            document.querySelector('.page-title').textContent = this.textContent;
+            
+            alert(`Você abriu a página: ${this.textContent}`);
+        });
+    });
+
+    // Botão Sair
+    document.getElementById('btnSair').addEventListener('click', function() {
+        alert('Saindo do sistema...');
+    });
+
+    // Função para verificar permissão
+    function podePromover(codPatenteQuemPromove, codPatenteAlvo) {
+        const idxQuem = patentes.findIndex(p => p.cod === codPatenteQuemPromove);
+        const idxAlvo = patentes.findIndex(p => p.cod === codPatenteAlvo);
+        
+        const maximo = regrasPermissao[codPatenteQuemPromove] || 0;
+
+        // Verifica se o alvo está dentro do limite permitido
+        if (idxAlvo <= idxQuem - 1 && idxAlvo >= (idxQuem - 1 - maximo)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Função para criar a tag HTML da patente
+    function criarTagPatente(cod) {
+        const p = patentes.find(x => x.cod === cod);
+        const tag = document.createElement("span");
+        tag.className = "patente-tag";
+        tag.style.backgroundColor = p.cor;
+        tag.style.color = p.colorText || "white";
+        tag.textContent = `[${p.cod}] ${p.nome}`;
+        return tag;
+    }
+
+    console.log("Sistema EB Promoções Carregado! ✅");
+    console.log("Todas as patentes e regras carregadas.");
+
+</script>
 
 </body>
 </html>
