@@ -1,98 +1,144 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Promoções EB</title>
+<meta charset="UTF-8">
+<title>Promoções EB</title>
 
-  <style>
-    body {
-      background-color: #1b2a1b;
-      color: #e0e0e0;
-      font-family: Arial;
-      text-align: center;
-    }
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: linear-gradient(135deg, #0f2a0f, #1b3a1b);
+    color: #fff;
+}
 
-    h1 { color: #4CAF50; }
+/* TOPO */
+header {
+    text-align: center;
+    padding: 20px;
+    background: #0d1f0d;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
 
-    input, select, button {
-      padding: 10px;
-      margin: 5px;
-      border: none;
-      border-radius: 5px;
-    }
+h1 {
+    color: #4CAF50;
+}
 
-    button {
-      background-color: #4CAF50;
-      color: white;
-      cursor: pointer;
-    }
+/* CAIXA PRINCIPAL */
+.container {
+    max-width: 500px;
+    margin: 30px auto;
+    background: #111;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.6);
+}
 
-    button:hover {
-      background-color: #45a049;
-    }
+/* INPUTS */
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: none;
+}
 
-    #log {
-      margin-top: 20px;
-      background: #111;
-      padding: 10px;
-      border-radius: 10px;
-    }
-  </style>
+/* BOTÕES */
+button {
+    width: 48%;
+    padding: 10px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 5px;
+    background: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #45a049;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* LOG */
+#log {
+    margin: 20px;
+    padding: 15px;
+    background: #000;
+    border-radius: 10px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.log-item {
+    padding: 10px;
+    border-bottom: 1px solid #333;
+}
+</style>
 </head>
 
 <body onload="carregar()">
 
-<h1>🪖 Exército Brasileiro RP</h1>
+<header>
+    <h1>🪖 Exército Brasileiro RP</h1>
+</header>
 
-<input type="text" id="nome" placeholder="Nome do soldado">
+<div class="container">
+    <input type="text" id="nome" placeholder="Nome do soldado">
 
-<select id="patente">
-  <option>Soldado</option>
-  <option>Cabo</option>
-  <option>Sargento</option>
-  <option>Tenente</option>
-  <option>Capitão</option>
-</select>
+    <select id="patente">
+        <option>Soldado</option>
+        <option>Cabo</option>
+        <option>Sargento</option>
+        <option>Tenente</option>
+        <option>Capitão</option>
+    </select>
 
-<br>
-
-<button onclick="promover()">Promover</button>
-<button onclick="limpar()">Limpar Log</button>
+    <div class="buttons">
+        <button onclick="promover()">Promover</button>
+        <button onclick="limpar()">Limpar</button>
+    </div>
+</div>
 
 <div id="log"></div>
 
 <script>
 function salvar() {
-  localStorage.setItem('log', document.getElementById('log').innerHTML);
+    localStorage.setItem("log", document.getElementById("log").innerHTML);
 }
 
 function carregar() {
-  document.getElementById('log').innerHTML =
-    localStorage.getItem('log') || "";
+    document.getElementById("log").innerHTML = localStorage.getItem("log") || "";
 }
 
 function promover() {
-  let nome = document.getElementById('nome').value;
-  let patente = document.getElementById('patente').value;
+    let nome = document.getElementById("nome").value;
+    let patente = document.getElementById("patente").value;
 
-  if (!nome) {
-    alert('Digite o nome');
-    return;
-  }
+    if (!nome) {
+        alert("Digite o nome");
+        return;
+    }
 
-  let log = document.getElementById('log');
-  let p = document.createElement('p');
+    let log = document.getElementById("log");
 
-  p.innerText = nome + ' foi promovido para ' + patente;
-  log.appendChild(p);
+    let div = document.createElement("div");
+    div.className = "log-item";
+    div.innerText = nome + " foi promovido para " + patente;
 
-  salvar();
+    log.appendChild(div);
+
+    salvar();
 }
 
 function limpar() {
-  document.getElementById('log').innerHTML = "";
-  localStorage.removeItem('log');
+    document.getElementById("log").innerHTML = "";
+    localStorage.removeItem("log");
 }
 </script>
 
