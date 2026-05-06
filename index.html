@@ -4,316 +4,247 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EB Promoções</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        eb: {
+                            green: '#00A844',
+                            dark: '#0F1419',
+                            card: '#1A202C',
+                            red: '#C62828',
+                            yellow: '#FBC02D',
+                            blue: '#1565C0',
+                            gray: '#4A5568'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
         }
-
-        body {
-            background-color: #050505;
-            color: #f0f0f0;
-            min-height: 100vh;
-        }
-
-        /* --- TELA DE LOGIN --- */
-        #telaLogin {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: linear-gradient(135deg, #111 0%, #050505 100%);
-        }
-
-        .login-box {
-            background-color: #121212;
-            padding: 40px;
-            border-radius: 15px;
-            text-align: center;
-            border: 1px solid #333;
-            width: 90%;
-            max-width: 400px;
-        }
-
-        .logo-eb {
-            width: 100px;
-            height: 100px;
-            background-color: #00a844;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 50px;
-            font-weight: bold;
-            color: white;
-        }
-
-        .login-box h1 {
-            margin-bottom: 10px;
-            color: #fff;
-        }
-
-        .login-box p {
-            color: #aaa;
-            margin-bottom: 30px;
-        }
-
-        .btn-discord {
-            background-color: #5865F2;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: 0.3s;
-        }
-
-        .btn-discord:hover {
-            background-color: #4752c4;
-            transform: scale(1.02);
-        }
-
-        /* --- CONTEÚDO PRINCIPAL --- */
-        #conteudoPrincipal {
-            display: none;
-        }
-
-        .header {
-            display: flex;
-            align-items: center;
-            padding: 15px 20px;
-            background-color: #111;
-            border-bottom: 1px solid #222;
-        }
-
-        .logo {
-            background-color: #00a844;
-            color: white;
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 18px;
-            margin-right: 10px;
-        }
-
-        .title {
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        nav {
-            display: flex;
-            gap: 5px;
-            margin-left: 30px;
-        }
-
-        nav a {
-            color: #aaa;
-            text-decoration: none;
-            padding: 10px 18px;
-            border-radius: 8px 8px 0 0;
-            font-size: 15px;
-            transition: 0.2s;
-        }
-
-        nav a.active {
-            background-color: #1a1a1a;
-            color: white;
-            border-bottom: 3px solid #00a844;
-        }
-
-        .container {
-            padding: 25px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .page-title {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        .page-subtitle {
-            color: #00a844;
-            font-size: 16px;
-            margin-bottom: 25px;
-        }
-
-        .card {
-            background-color: #121212;
-            border: 1px solid #2a2a2a;
-            border-radius: 12px;
-            padding: 22px;
-            margin-bottom: 20px;
-        }
-
-        .card h3 {
-            color: #888;
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 18px;
-            text-transform: uppercase;
-        }
-
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #222;
-        }
-
-        .label { color: #aaa; }
-        .value { color: #fff; font-weight: 500; }
-
-        .btn {
-            background-color: #00a844;
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        .patente-tag {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: bold;
-            color: white;
-        }
-
-        /* AVISO DE TEMPO RÁPIDO */
-        .aviso-rapido {
-            background-color: #1a232b;
-            border: 1px solid #00a8ff;
-            color: #81d4fa;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            font-weight: bold;
-            animation: piscar 2s infinite;
-        }
-
-        @keyframes piscar {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .border-active {
+                border-bottom: 2px solid #00A844;
+            }
         }
     </style>
 </head>
-<body>
+<body class="bg-eb-dark text-gray-200 font-sans min-h-screen">
 
-<!-- TELA DE LOGIN -->
-<div id="telaLogin">
-    <div class="login-box">
-        <div class="logo-eb">EB</div>
-        <h1>Exército Brasileiro</h1>
-        <p>Verifique-se agora e entre no sistema!</p>
-        
-        <button class="btn-discord" id="btnLoginDiscord">
-            <span>🔗</span> Entrar com Discord
-        </button>
-    </div>
-</div>
-
-<!-- PAINEL PRINCIPAL -->
-<div id="conteudoPrincipal">
-    <div class="header">
-        <div class="logo">EB</div>
-        <div class="title">Promoções</div>
-        <nav>
-            <a href="#" class="active">Dashboard</a>
-            <a href="#">Promoção</a>
-            <a href="#">Atípica</a>
-            <a href="#">Rebaixamento</a>
-            <a href="#">Histórico</a>
-        </nav>
-    </div>
-
-    <div class="container">
-        <h1 class="page-title">Dashboard</h1>
-        <p class="page-subtitle">Exercito Brasileiro</p>
-
-        <div class="card">
-            <h3>Seus Dados</h3>
-            <div class="info-row">
-                <span class="label">Usuário</span>
-                <span class="value" id="nomeUser">-</span>
+    <!-- CABEÇALHO / NAVEGAÇÃO -->
+    <header class="bg-black/40 border-b border-gray-800 px-4 py-3">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="bg-eb-green text-white w-9 h-9 rounded-md flex items-center justify-center font-bold text-lg">EB</div>
+                <h1 class="text-xl font-bold text-white">Promoções</h1>
+                <span class="bg-eb-green/20 text-eb-green px-2 py-1 rounded text-sm font-medium">EB <i class="fa fa-exchange"></i></span>
             </div>
-            <div class="info-row">
-                <span class="label">Status</span>
-                <span class="value" style="color:#0f0;">✅ VERIFICADO</span>
-            </div>
-            <div class="info-row">
-                <span class="label">Patente</span>
-                <span class="value">
-                    <span class="patente-tag" style="background:#B0BEC5;">[REC] Recruta</span>
-                </span>
-            </div>
+            <nav class="flex gap-1 md:gap-4">
+                <a href="#" class="nav-link px-3 py-2 rounded-t-md text-gray-400 hover:text-white transition" data-page="dashboard">Dashboard</a>
+                <a href="#" class="nav-link px-3 py-2 rounded-t-md text-gray-400 hover:text-white transition" data-page="promocao">Promoção</a>
+                <a href="#" class="nav-link px-3 py-2 rounded-t-md text-gray-400 hover:text-white transition" data-page="atipica">Atípica</a>
+                <a href="#" class="nav-link px-3 py-2 rounded-t-md text-gray-400 hover:text-white transition" data-page="rebaixamento">Rebaixamento</a>
+                <a href="#" class="nav-link px-3 py-2 rounded-t-md text-gray-400 hover:text-white transition" data-page="historico">Histórico</a>
+            </nav>
         </div>
+    </header>
 
-        <!-- AVISO QUE ATUALIZA RÁPIDO -->
-        <div class="aviso-rapido">
-            ⚡ SINCRONIZAÇÃO RÁPIDA ATIVADA ⚡<br>
-            Sua patente e cargo aparecerão no jogo em até <span style="color: yellow;">1 MINUTO</span>!
-        </div>
-
-        <button class="btn" id="btnSair">Sair</button>
-    </div>
-</div>
-
-<script>
-    // LOGIN
-    document.getElementById('btnLoginDiscord').addEventListener('click', function() {
-        document.getElementById('telaLogin').style.display = 'none';
-        document.getElementById('conteudoPrincipal').style.display = 'block';
-        document.getElementById('nomeUser').textContent = "Soldado_" + Math.floor(Math.random()*9999);
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="max-w-7xl mx-auto px-4 py-6">
         
-        alert("✅ Verificado com sucesso!\nEntre no jogo que em menos de 1 minuto já vai estar tudo atualizado!");
-    });
+        <!-- PÁGINA DASHBOARD -->
+        <section class="pagina" id="pagina-dashboard">
+            <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-white mb-2">Dashboard</h2>
+            <p class="text-eb-green text-lg mb-8">Exército Brasileiro</p>
 
-    // LISTA DE PATENTES
-    const patentes = [
-        { cod: "REC", nome: "Recruta", cor: "#B0BEC5" },
-        { cod: "CADETE", nome: "Cadete", cor: "#B0BEC5" },
-        { cod: "ASP", nome: "Aspirante", cor: "#BA68C8" },
-        { cod: "1-TEN", nome: "1º Tenente", cor: "#BA68C8" },
-        { cod: "2-TEN", nome: "2º Tenente", cor: "#BA68C8" },
-        { cod: "CAP", nome: "Capitão", cor: "#EF5350" },
-        { cod: "MAJ", nome: "Major", cor: "#FFEE58", corTxt: "#000" },
-        { cod: "TEN-CEL", nome: "Ten Cel", cor: "#FFEE58", corTxt: "#000" },
-        { cod: "CEL", nome: "Coronel", cor: "#FFEE58", corTxt: "#000" },
-        { cod: "GEN-BDA", nome: "Gen Brigada", cor: "#FFA726" },
-        { cod: "GEN-DIV", nome: "Gen Divisão", cor: "#FFA726" },
-        { cod: "GEN-EX", nome: "Gen Exército", cor: "#FFA726" },
-        { cod: "EM", nome: "Elite Militar", cor: "#6C5CE7" },
-        { cod: "ES", nome: "Elite Secreta", cor: "#81D4FA", corTxt: "#000" },
-        { cod: "ER", nome: "Elite Real", cor: "#F48FB1" },
-        { cod: "CMDT", nome: "Comandante", cor: "#E53935" },
-        { cod: "PRES", nome: "Presidente", cor: "#455A64" },
-        { cod: "CREATOR", nome: "Criador", cor: "#FFD600", corTxt: "#000" }
-    ];
+            <div class="grid gap-6">
+                <div class="bg-eb-card rounded-xl p-6 border border-gray-700">
+                    <h3 class="text-gray-400 text-sm uppercase font-semibold mb-4 tracking-wider">Identidade</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center py-2 border-b border-gray-700">
+                            <span class="text-gray-400">Usuário</span>
+                            <span class="font-medium">calebminio</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-700">
+                            <span class="text-gray-400">Roblox ID</span>
+                            <span class="font-medium">3006425578</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-700">
+                            <span class="text-gray-400">Patente</span>
+                            <span class="px-3 py-1 rounded-md text-white font-bold text-sm" style="background-color: #FFA726;">[GEN-BDA] General de Brigada</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-700">
+                            <span class="text-gray-400">Permissão</span>
+                            <span class="font-medium text-eb-green">✅ Verificado</span>
+                        </div>
+                    </div>
+                </div>
 
-    // SAIR
-    document.getElementById('btnSair').addEventListener('click', function() {
-        location.reload();
-    });
-</script>
+                <div class="bg-eb-card rounded-xl p-6 border border-gray-700">
+                    <h3 class="text-gray-400 text-sm uppercase font-semibold mb-4 tracking-wider">Informações de Grupo</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center py-2 border-b border-gray-700">
+                            <span class="text-gray-400">CGEx</span>
+                            <span class="font-medium">não</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-700">
+                            <span class="text-gray-400">Afiliados</span>
+                            <span class="font-medium">não</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-700">
+                            <span class="text-gray-400">Elite Gamepass</span>
+                            <span class="font-medium">não</span>
+                        </div>
+                    </div>
+                </div>
 
-</body>
-</html>
+                <div class="bg-eb-blue/10 border border-eb-blue/30 text-eb-blue p-4 rounded-lg text-center font-bold animate-pulse">
+                    ⚡ SINCRONIZAÇÃO RÁPIDA ATIVADA ⚡<br>
+                    Sua patente e cargo aparecerão no jogo em até <span class="text-yellow-400">1 MINUTO</span>!
+                </div>
+
+                <button class="bg-eb-green hover:bg-eb-green/90 text-white font-bold py-3 px-6 rounded-lg transition">Sair</button>
+            </div>
+        </section>
+
+        <!-- PÁGINA PROMOÇÃO NORMAL -->
+        <section class="pagina hidden" id="pagina-promocao">
+            <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-white mb-2">Promoção Normal</h2>
+            <p class="text-eb-green text-lg mb-2">Exército Brasileiro</p>
+            <p class="text-gray-400 mb-8">Informe o Roblox ID do alvo para verificar a elegibilidade e realizar a promoção.</p>
+
+            <div class="bg-eb-card rounded-xl p-6 border border-gray-700 mb-6">
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
+                        <span class="text-gray-400">Promotor</span>
+                        <span class="font-medium text-lg">calebminio</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
+                        <span class="text-gray-400">Rank</span>
+                        <span class="font-medium text-lg">16</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
+                        <span class="text-gray-400">Limite horário</span>
+                        <span class="font-medium text-lg">20 promoções/hora</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-3 mb-6">
+                <input type="text" placeholder="Roblox ID ou username do alvo" class="flex-1 bg-eb-card border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-eb-green">
+                <button class="bg-eb-blue hover:bg-eb-blue/90 text-white font-medium px-6 py-3 rounded-lg transition whitespace-nowrap">Buscar</button>
+            </div>
+
+            <!-- Resultado da busca (aparece depois) -->
+            <div class="bg-eb-card rounded-xl p-6 border border-gray-700 hidden" id="resultadoBusca">
+                <h3 class="text-gray-400 text-sm uppercase font-semibold mb-4">Alvo</h3>
+                <div class="space-y-3 mb-6">
+                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
+                        <span class="text-gray-400">Username</span>
+                        <span class="font-medium">minion3adm</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
+                        <span class="text-gray-400">Roblox ID</span>
+                        <span class="font-medium">2996231673</span>
+                    </div>
+                </div>
+
+                <h3 class="text-gray-400 text-sm uppercase font-semibold mb-4">Elegibilidade</h3>
+                <div class="space-y-3 mb-6">
+                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
+                        <span class="text-gray-400">Rank atual</span>
+                        <span class="font-medium">[3º SGT] Terceiro Sargento</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
+                        <span class="text-gray-400">Promoção para</span>
+                        <span class="font-medium text-eb-green">[2º SGT] Segundo Sargento</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
+                        <span class="text-gray-400">CDP</span>
+                        <span class="font-medium">146.0h de 20h</span>
+                    </div>
+                </div>
+
+                <div class="bg-eb-green/20 text-eb-green p-3 rounded-lg font-medium mb-4">✅ Apto para promoção normal.</div>
+                <button class="bg-eb-green hover:bg-eb-green/90 text-white font-bold py-3 px-6 rounded-lg w-full transition">Promover para [2º SGT] Segundo Sargento</button>
+            </div>
+        </section>
+
+        <!-- PÁGINA PROMOÇÃO ATÍPICA -->
+        <section class="pagina hidden" id="pagina-atipica">
+            <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-white mb-2">Promoção Atípica</h2>
+            <p class="text-eb-green text-lg mb-2">Exército Brasileiro</p>
+            <p class="text-gray-400 mb-8">Exclusiva para CGEx e Afiliados. Permite pular ranks até Sócio. Motivo obrigatório.</p>
+
+            <div class="bg-eb-card rounded-xl p-6 border border-gray-700 mb-6">
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
+                        <span class="text-gray-400">Tipo</span>
+                        <span class="bg-eb-yellow/20 text-eb-yellow px-3 py-1 rounded font-bold">MEMBER</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
+                        <span class="text-gray-400">Limite horário</span>
+                        <span class="font-medium text-lg">20 promoções/hora</span>
+                    </div>
+                </div>
+
+                <div class="bg-eb-red/20 text-eb-red p-4 rounded-lg font-medium mt-6">❌ Você não tem permissão para realizar promoções atípicas.</div>
+            </div>
+        </section>
+
+        <!-- PÁGINA REBAIXAMENTO -->
+        <section class="pagina hidden" id="pagina-rebaixamento">
+            <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-white mb-2">Rebaixamento</h2>
+            <p class="text-eb-green text-lg mb-2">Exército Brasileiro</p>
+            <p class="text-gray-400 mb-8">Exclusivo para CR, 2-CR, ADM-G, ADM, CGEx e Afiliados. Motivo obrigatório. Sem validação de CDP ou treinamento.</p>
+
+            <div class="bg-eb-card rounded-xl p-6 border border-gray-700 mb-6">
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
+                        <span class="text-gray-400">Tipo</span>
+                        <span class="bg-eb-red/20 text-eb-red px-3 py-1 rounded font-bold">REBAIXAMENTO</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
+                        <span class="text-gray-400">Perfil</span>
+                        <span class="bg-gray-700 px-3 py-1 rounded font-medium">MEMBER</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
+                        <span class="text-gray-400">Limite horário</span>
+                        <span class="font-medium text-lg">20 operações/hora</span>
+                    </div>
+                </div>
+
+                <div class="bg-eb-red/20 text-eb-red p-4 rounded-lg font-medium mt-6">❌ Você não tem permissão para realizar rebaixamentos.</div>
+            </div>
+        </section>
+
+        <!-- PÁGINA HISTÓRICO -->
+        <section class="pagina hidden" id="pagina-historico">
+            <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-white mb-2">Histórico</h2>
+            <p class="text-eb-green text-lg mb-8">Exército Brasileiro</p>
+            <p class="text-gray-400 mb-4">21689 resultados – página 1 de 1085</p>
+
+            <div class="bg-eb-card rounded-xl border border-gray-700 overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead class="border-b border-gray-700">
+                        <tr class="text-left text-gray-400">
+                            <th class="p-4 font-semibold">TIPO</th>
+                            <th class="p-4 font-semibold">STATUS</th>
+                            <th class="p-4 font-semibold">SOL
