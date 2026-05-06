@@ -1,54 +1,51 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Promoções EB</title>
+  <meta charset="UTF-8">
+  <title>Promoções EB</title>
 
-<style>
-  body {
-    background-color: #1b2a1b;
-    color: #e0e0e0;
-    font-family: Arial;
-    text-align: center;
-  }
+  <style>
+    body {
+      background-color: #1b2a1b;
+      color: #e0e0e0;
+      font-family: Arial;
+      text-align: center;
+    }
 
-  h1 {
-    color: #4CAF50;
-  }
+    h1 { color: #4CAF50; }
 
-  input, select, button {
-    padding: 10px;
-    margin: 5px;
-    border: none;
-    border-radius: 5px;
-  }
+    input, select, button {
+      padding: 10px;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+    }
 
-  button {
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
-  }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
 
-  button:hover {
-    background-color: #45a049;
-  }
+    button:hover {
+      background-color: #45a049;
+    }
 
-  #log {
-    margin-top: 20px;
-    background: #111;
-    padding: 10px;
-    border-radius: 10px;
-  }
-</style>
+    #log {
+      margin-top: 20px;
+      background: #111;
+      padding: 10px;
+      border-radius: 10px;
+    }
+  </style>
 </head>
 
-<body>
+<body onload="carregar()">
 
 <h1>🪖 Exército Brasileiro RP</h1>
 
-<p>Soldado → Cabo → Sargento → Tenente → Capitão</p>
-
-<input id="nome" placeholder="Nome do soldado">
+<input type="text" id="nome" placeholder="Nome do soldado">
 
 <select id="patente">
   <option>Soldado</option>
@@ -71,7 +68,8 @@ function salvar() {
 }
 
 function carregar() {
-  document.getElementById('log').innerHTML = localStorage.getItem('log') || '';
+  document.getElementById('log').innerHTML =
+    localStorage.getItem('log') || "";
 }
 
 function promover() {
@@ -93,11 +91,9 @@ function promover() {
 }
 
 function limpar() {
-  document.getElementById('log').innerHTML = '';
+  document.getElementById('log').innerHTML = "";
   localStorage.removeItem('log');
 }
-
-carregar();
 </script>
 
 </body>
