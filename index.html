@@ -1,56 +1,180 @@
-<div class="header">
-    <div class="logo">EB</div>
-    <div class="title">Promoções</div>
-    <nav>
-        <a href="#" class="active">Dashboard</a>
-        <a href="#">Promoção</a>
-        <a href="#">Atípica</a>
-        <a href="#">Rebaixamento</a>
-        <a href="#">Histórico</a>
-    </nav>
-</div>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
 
-<div class="container">
-    <h1 class="page-title">Dashboard</h1>
-    <p class="page-subtitle">Exercito Brasileiro</p>
+    body {
+        background-color: #050505;
+        color: #f0f0f0;
+        min-height: 100vh;
+    }
 
-    <!-- Card de Identidade -->
-    <div class="card">
-        <h3>Identidade</h3>
-        <div class="info-row">
-            <span class="label">Username</span>
-            <span class="value">calebminio</span>
-        </div>
-        <div class="info-row">
-            <span class="label">Roblox ID</span>
-            <span class="value">3006425578</span>
-        </div>
-        <div class="info-row">
-            <span class="label">Admin</span>
-            <span class="value">não</span>
-        </div>
-    </div>
+    /* Cabeçalho */
+    .header {
+        display: flex;
+        align-items: center;
+        padding: 15px 20px;
+        background-color: #111;
+        border-bottom: 1px solid #222;
+    }
 
-    <!-- Card de Grupo -->
-    <div class="card">
-        <h3>Grupo: Exercito Brasileiro</h3>
-        <div class="info-row">
-            <span class="label">Patente</span>
-            <span class="value">[GEN BDA] General de Brigada</span>
-        </div>
-        <div class="info-row">
-            <span class="label">CGEx</span>
-            <span class="value">não</span>
-        </div>
-        <div class="info-row">
-            <span class="label">Afiliados</span>
-            <span class="value">não</span>
-        </div>
-        <div class="info-row">
-            <span class="label">Elite Gamepass</span>
-            <span class="value">não</span>
-        </div>
-    </div>
+    .logo {
+        background-color: #00a844;
+        color: white;
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 18px;
+        margin-right: 10px;
+    }
 
-    <button class="btn">Sair</button>
-</div>
+    .title {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    /* Menu de Navegação */
+    nav {
+        display: flex;
+        gap: 5px;
+        margin-left: 30px;
+    }
+
+    nav a {
+        color: #aaa;
+        text-decoration: none;
+        padding: 10px 18px;
+        border-radius: 8px 8px 0 0;
+        font-size: 15px;
+    }
+
+    nav a.active {
+        background-color: #1a1a1a;
+        color: white;
+        border-bottom: 3px solid #00a844;
+    }
+
+    /* Conteúdo Principal */
+    .container {
+        padding: 25px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .page-title {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .page-subtitle {
+        color: #00a844;
+        font-size: 16px;
+        margin-bottom: 25px;
+    }
+
+    /* Cards */
+    .card {
+        background-color: #121212;
+        border: 1px solid #2a2a2a;
+        border-radius: 12px;
+        padding: 22px;
+        margin-bottom: 20px;
+    }
+
+    .card h3 {
+        color: #888;
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 18px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #222;
+    }
+
+    .info-row:last-child {
+        border-bottom: none;
+    }
+
+    .label {
+        color: #aaa;
+    }
+
+    .value {
+        color: #fff;
+        font-weight: 500;
+    }
+
+    /* Botões */
+    .btn {
+        background-color: #00a844;
+        color: white;
+        border: none;
+        padding: 14px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .btn:hover {
+        background-color: #00c250;
+    }
+
+    /* Status e Tags */
+    .tag {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: bold;
+        margin-right: 8px;
+    }
+
+    .tag.normal {
+        background-color: #1565c0;
+        color: white;
+    }
+
+    .tag.atipica {
+        background-color: #fbc02d;
+        color: #111;
+    }
+
+    .tag.ok {
+        background-color: #00a844;
+        color: white;
+    }
+
+    .tag.error {
+        background-color: #c62828;
+        color: white;
+    }
+
+    /* Tabela/Histórico */
+    .table-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr 2fr 2fr;
+        padding: 12px 0;
+        border-bottom: 1px solid #222;
+        align-items: center;
+    }
+
+    .table-header {
+        color: #888;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 13px;
+    }
+</style>
