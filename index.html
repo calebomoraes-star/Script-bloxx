@@ -1,1 +1,39 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Promoções EB</title>
+</head>
+<body>
+
+<h1>Exército Brasileiro RP</h1>
+
+<p>Soldado → Cabo → Sargento → Tenente → Capitão</p>
+
+<input id="nome" placeholder="Nome do soldado">
+<input id="patente" placeholder="Nova patente">
+
+<button onclick="promover()">Promover</button>
+
+<div id="log"></div>
+
+<script>
+function promover() {
+  let nome = document.getElementById('nome').value;
+  let patente = document.getElementById('patente').value;
+
+  if (!nome) {
+    alert('Digite o nome');
+    return;
+  }
+
+  let log = document.getElementById('log');
+  let p = document.createElement('p');
+
+  p.innerText = nome + ' promovido para ' + patente;
+  log.appendChild(p);
+}
+</script>
+
+</body>
+</html>
