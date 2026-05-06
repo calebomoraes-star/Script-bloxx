@@ -36,6 +36,11 @@ input, select {
     margin-top: 10px;
 }
 
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
 button {
     width: 48%;
     padding: 10px;
@@ -45,79 +50,37 @@ button {
     border: none;
 }
 
-.buttons {
-    display: flex;
-    justify-content: space-between;
-}
-
 #log {
     margin: 20px;
     padding: 15px;
     background: #000;
 }
 </style>
+
 </head>
 
 <body>
 
 <header>
-    <h1>🪖 Exército Brasileiro RP</h1>
+    <h1>Promoções EB</h1>
 </header>
 
 <div class="container">
-    <input type="text" id="nome" placeholder="Nome do soldado">
-
-    <select id="patente">
-        <option>Soldado</option>
-        <option>Cabo</option>
-        <option>Sargento</option>
-        <option>Tenente</option>
-        <option>Capitão</option>
+    <input type="text" placeholder="Digite algo...">
+    <select>
+        <option>Opção 1</option>
+        <option>Opção 2</option>
     </select>
 
     <div class="buttons">
-        <button onclick="promover()">Promover</button>
-        <button onclick="limpar()">Limpar</button>
+        <button>Enviar</button>
+        <button>Limpar</button>
     </div>
 </div>
 
-<div id="log"></div>
-
-<script>
-function salvar() {
-    localStorage.setItem("log", document.getElementById("log").innerHTML);
-}
-
-function carregar() {
-    document.getElementById("log").innerHTML = localStorage.getItem("log") || "";
-}
-
-function promover() {
-    let nome = document.getElementById("nome").value;
-    let patente = document.getElementById("patente").value;
-
-    if (!nome) {
-        alert("Digite o nome");
-        return;
-    }
-
-    let log = document.getElementById("log");
-
-    let p = document.createElement("p");
-    p.innerText = nome + " foi promovido para " + patente;
-
-    log.appendChild(p);
-
-    salvar();
-}
-
-function limpar() {
-    document.getElementById("log").innerHTML = "";
-    localStorage.removeItem("log");
-}
-
-carregar();
-</script>
+<div id="log">
+    Logs aparecerão aqui...
+</div>
 
 </body>
 </html>
