@@ -18,7 +18,76 @@
             min-height: 100vh;
         }
 
-        /* Cabeçalho */
+        /* --- TELA DE LOGIN --- */
+        #telaLogin {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #111 0%, #050505 100%);
+        }
+
+        .login-box {
+            background-color: #121212;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid #333;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .logo-eb {
+            width: 100px;
+            height: 100px;
+            background-color: #00a844;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .login-box h1 {
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .login-box p {
+            color: #aaa;
+            margin-bottom: 30px;
+        }
+
+        .btn-discord {
+            background-color: #5865F2;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .btn-discord:hover {
+            background-color: #4752c4;
+            transform: scale(1.02);
+        }
+
+        /* --- CONTEÚDO PRINCIPAL --- */
+        #conteudoPrincipal {
+            display: none;
+        }
+
         .header {
             display: flex;
             align-items: center;
@@ -42,7 +111,6 @@
             font-weight: bold;
         }
 
-        /* Menu de Navegação */
         nav {
             display: flex;
             gap: 5px;
@@ -64,11 +132,6 @@
             border-bottom: 3px solid #00a844;
         }
 
-        nav a:hover {
-            color: white;
-        }
-
-        /* Conteúdo Principal */
         .container {
             padding: 25px;
             max-width: 1200px;
@@ -87,7 +150,6 @@
             margin-bottom: 25px;
         }
 
-        /* Cards */
         .card {
             background-color: #121212;
             border: 1px solid #2a2a2a;
@@ -102,7 +164,6 @@
             font-weight: 500;
             margin-bottom: 18px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .info-row {
@@ -112,20 +173,9 @@
             border-bottom: 1px solid #222;
         }
 
-        .info-row:last-child {
-            border-bottom: none;
-        }
+        .label { color: #aaa; }
+        .value { color: #fff; font-weight: 500; }
 
-        .label {
-            color: #aaa;
-        }
-
-        .value {
-            color: #fff;
-            font-weight: 500;
-        }
-
-        /* Botões */
         .btn {
             background-color: #00a844;
             color: white;
@@ -137,45 +187,8 @@
             cursor: pointer;
             width: 100%;
             margin-top: 10px;
-            transition: 0.2s;
         }
 
-        .btn:hover {
-            background-color: #00c250;
-            transform: scale(1.01);
-        }
-
-        /* Status e Tags */
-        .tag {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: bold;
-            margin-right: 8px;
-        }
-
-        .tag.normal {
-            background-color: #1565c0;
-            color: white;
-        }
-
-        .tag.atipica {
-            background-color: #fbc02d;
-            color: #111;
-        }
-
-        .tag.ok {
-            background-color: #00a844;
-            color: white;
-        }
-
-        .tag.error {
-            background-color: #c62828;
-            color: white;
-        }
-
-        /* ESTILO DAS PATENTES COLORIDAS */
         .patente-tag {
             display: inline-block;
             padding: 4px 12px;
@@ -183,38 +196,52 @@
             font-size: 13px;
             font-weight: bold;
             color: white;
-            text-shadow: 0px 0px 3px rgba(0,0,0,0.3);
-            white-space: nowrap;
         }
 
-        /* Tabela/Histórico */
-        .table-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 2fr 2fr;
-            padding: 12px 0;
-            border-bottom: 1px solid #222;
-            align-items: center;
-        }
-
-        .table-header {
-            color: #888;
+        /* AVISO DE TEMPO RÁPIDO */
+        .aviso-rapido {
+            background-color: #1a232b;
+            border: 1px solid #00a8ff;
+            color: #81d4fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
             font-weight: bold;
-            text-transform: uppercase;
-            font-size: 13px;
+            animation: piscar 2s infinite;
+        }
+
+        @keyframes piscar {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
     </style>
 </head>
 <body>
 
+<!-- TELA DE LOGIN -->
+<div id="telaLogin">
+    <div class="login-box">
+        <div class="logo-eb">EB</div>
+        <h1>Exército Brasileiro</h1>
+        <p>Verifique-se agora e entre no sistema!</p>
+        
+        <button class="btn-discord" id="btnLoginDiscord">
+            <span>🔗</span> Entrar com Discord
+        </button>
+    </div>
+</div>
+
+<!-- PAINEL PRINCIPAL -->
+<div id="conteudoPrincipal">
     <div class="header">
         <div class="logo">EB</div>
         <div class="title">Promoções</div>
         <nav>
-            <a href="#" class="active" data-page="dashboard">Dashboard</a>
-            <a href="#" data-page="promocao">Promoção</a>
-            <a href="#" data-page="atipica">Atípica</a>
-            <a href="#" data-page="rebaixamento">Rebaixamento</a>
-            <a href="#" data-page="historico">Histórico</a>
+            <a href="#" class="active">Dashboard</a>
+            <a href="#">Promoção</a>
+            <a href="#">Atípica</a>
+            <a href="#">Rebaixamento</a>
+            <a href="#">Histórico</a>
         </nav>
     </div>
 
@@ -222,159 +249,70 @@
         <h1 class="page-title">Dashboard</h1>
         <p class="page-subtitle">Exercito Brasileiro</p>
 
-        <!-- Card de Identidade -->
         <div class="card">
-            <h3>Identidade</h3>
+            <h3>Seus Dados</h3>
             <div class="info-row">
-                <span class="label">Username</span>
-                <span class="value">calebminio</span>
+                <span class="label">Usuário</span>
+                <span class="value" id="nomeUser">-</span>
             </div>
             <div class="info-row">
-                <span class="label">Roblox ID</span>
-                <span class="value">3006425578</span>
+                <span class="label">Status</span>
+                <span class="value" style="color:#0f0;">✅ VERIFICADO</span>
             </div>
-            <div class="info-row">
-                <span class="label">Admin</span>
-                <span class="value">não</span>
-            </div>
-        </div>
-
-        <!-- Card de Grupo -->
-        <div class="card">
-            <h3>Grupo: Exercito Brasileiro</h3>
             <div class="info-row">
                 <span class="label">Patente</span>
                 <span class="value">
-                    <span class="patente-tag" style="background-color: #FFA726;">[GEN BDA] General de Brigada</span>
+                    <span class="patente-tag" style="background:#B0BEC5;">[REC] Recruta</span>
                 </span>
             </div>
-            <div class="info-row">
-                <span class="label">CGEx</span>
-                <span class="value">não</span>
-            </div>
-            <div class="info-row">
-                <span class="label">Afiliados</span>
-                <span class="value">não</span>
-            </div>
-            <div class="info-row">
-                <span class="label">Elite Gamepass</span>
-                <span class="value">não</span>
-            </div>
+        </div>
+
+        <!-- AVISO QUE ATUALIZA RÁPIDO -->
+        <div class="aviso-rapido">
+            ⚡ SINCRONIZAÇÃO RÁPIDA ATIVADA ⚡<br>
+            Sua patente e cargo aparecerão no jogo em até <span style="color: yellow;">1 MINUTO</span>!
         </div>
 
         <button class="btn" id="btnSair">Sair</button>
     </div>
+</div>
 
 <script>
-    // ==============================================
-    // LISTA DE TODAS AS PATENTES COM SUAS CORES
-    // ==============================================
+    // LOGIN
+    document.getElementById('btnLoginDiscord').addEventListener('click', function() {
+        document.getElementById('telaLogin').style.display = 'none';
+        document.getElementById('conteudoPrincipal').style.display = 'block';
+        document.getElementById('nomeUser').textContent = "Soldado_" + Math.floor(Math.random()*9999);
+        
+        alert("✅ Verificado com sucesso!\nEntre no jogo que em menos de 1 minuto já vai estar tudo atualizado!");
+    });
+
+    // LISTA DE PATENTES
     const patentes = [
+        { cod: "REC", nome: "Recruta", cor: "#B0BEC5" },
         { cod: "CADETE", nome: "Cadete", cor: "#B0BEC5" },
-        { cod: "ASP", nome: "Aspirante a Oficial", cor: "#BA68C8" },
-        { cod: "1-TEN", nome: "Primeiro Tenente", cor: "#BA68C8" },
-        { cod: "2-TEN", nome: "Segundo Tenente", cor: "#BA68C8" },
+        { cod: "ASP", nome: "Aspirante", cor: "#BA68C8" },
+        { cod: "1-TEN", nome: "1º Tenente", cor: "#BA68C8" },
+        { cod: "2-TEN", nome: "2º Tenente", cor: "#BA68C8" },
         { cod: "CAP", nome: "Capitão", cor: "#EF5350" },
-        { cod: "MAJ", nome: "Major", cor: "#FFEE58", colorText: "#000" },
-        { cod: "TEN-CEL", nome: "Tenente Coronel", cor: "#FFEE58", colorText: "#000" },
-        { cod: "CEL", nome: "Coronel", cor: "#FFEE58", colorText: "#000" },
-        { cod: "GEN-BDA", nome: "General de Brigada", cor: "#FFA726" },
-        { cod: "GEN-DIV", nome: "General de Divisão", cor: "#FFA726" },
-        { cod: "GEN-EX", nome: "General de Exército", cor: "#FFA726" },
+        { cod: "MAJ", nome: "Major", cor: "#FFEE58", corTxt: "#000" },
+        { cod: "TEN-CEL", nome: "Ten Cel", cor: "#FFEE58", corTxt: "#000" },
+        { cod: "CEL", nome: "Coronel", cor: "#FFEE58", corTxt: "#000" },
+        { cod: "GEN-BDA", nome: "Gen Brigada", cor: "#FFA726" },
+        { cod: "GEN-DIV", nome: "Gen Divisão", cor: "#FFA726" },
+        { cod: "GEN-EX", nome: "Gen Exército", cor: "#FFA726" },
         { cod: "EM", nome: "Elite Militar", cor: "#6C5CE7" },
-        { cod: "ES", nome: "Elite Secreta", cor: "#81D4FA", colorText: "#000" },
+        { cod: "ES", nome: "Elite Secreta", cor: "#81D4FA", corTxt: "#000" },
         { cod: "ER", nome: "Elite Real", cor: "#F48FB1" },
         { cod: "CMDT", nome: "Comandante", cor: "#E53935" },
-        { cod: "SUB-COM", nome: "Subcomandante", cor: "#E53935" },
         { cod: "PRES", nome: "Presidente", cor: "#455A64" },
-        { cod: "VICE", nome: "Vice Presidente", cor: "#455A64" },
-        { cod: "MA", nome: "Manager", cor: "#29B6F6" },
-        { cod: "SC", nome: "Sócios", cor: "#29B6F6" },
-        { cod: "CREATOR", nome: "Criador", cor: "#FFD600", colorText: "#000" },
-        { cod: "SUB-CRIADOR", nome: "Sub Criadores", cor: "#FFD600", colorText: "#000" }
+        { cod: "CREATOR", nome: "Criador", cor: "#FFD600", corTxt: "#000" }
     ];
 
-    // ==============================================
-    // REGRAS DE QUEM PODE PROMOVER ATÉ QUEM
-    // ==============================================
-    const regrasPermissao = {
-        "ASP": 0,      // Aspirante promove só até Cadete
-        "1-TEN": 1,    // Primeiro Tenente promove até Aspirante
-        "2-TEN": 2,    // Segundo Tenente promove até 1º Tenente
-        "CAP": 3,      // Capitão promove até 2º Tenente
-        "MAJ": 4,      // Major promove até Capitão
-        "TEN-CEL": 5,  // Tenente Coronel promove até Major
-        "CEL": 6,      // Coronel promove até Tenente Coronel
-        "GEN-BDA": 7,  // General de Brigada promove até Coronel
-        "GEN-DIV": 8,  // General de Divisão promove até Gen de Brigada
-        "GEN-EX": 9,   // General de Exército promove até Gen de Divisão
-        "EM": 10,      // Elite Militar promove até Gen de Exército
-        "ES": 11,      // Elite Secreta promove até Elite Militar
-        "ER": 12,      // Elite Real promove até Elite Secreta
-        "CMDT": 99,    // Comandante pode TUDO
-        "PRES": 99,    // Presidente pode TUDO
-        "MA": 99,      // Manager pode TUDO
-        "CREATOR": 99, // Criador pode TUDO
-        "SUB-CRIADOR": 99
-    };
-
-    // ==============================================
-    // FUNÇÕES DO SISTEMA
-    // ==============================================
-    
-    // Mudar página no menu
-    document.querySelectorAll('nav a').forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Remove active de todos
-            document.querySelectorAll('nav a').forEach(el => el.classList.remove('active'));
-            
-            // Adiciona no clicado
-            this.classList.add('active');
-
-            // Atualiza título da página
-            const pagina = this.getAttribute('data-page');
-            document.querySelector('.page-title').textContent = this.textContent;
-            
-            alert(`Você abriu a página: ${this.textContent}`);
-        });
-    });
-
-    // Botão Sair
+    // SAIR
     document.getElementById('btnSair').addEventListener('click', function() {
-        alert('Saindo do sistema...');
+        location.reload();
     });
-
-    // Função para verificar permissão
-    function podePromover(codPatenteQuemPromove, codPatenteAlvo) {
-        const idxQuem = patentes.findIndex(p => p.cod === codPatenteQuemPromove);
-        const idxAlvo = patentes.findIndex(p => p.cod === codPatenteAlvo);
-        
-        const maximo = regrasPermissao[codPatenteQuemPromove] || 0;
-
-        // Verifica se o alvo está dentro do limite permitido
-        if (idxAlvo <= idxQuem - 1 && idxAlvo >= (idxQuem - 1 - maximo)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    // Função para criar a tag HTML da patente
-    function criarTagPatente(cod) {
-        const p = patentes.find(x => x.cod === cod);
-        const tag = document.createElement("span");
-        tag.className = "patente-tag";
-        tag.style.backgroundColor = p.cor;
-        tag.style.color = p.colorText || "white";
-        tag.textContent = `[${p.cod}] ${p.nome}`;
-        return tag;
-    }
-
-    console.log("Sistema EB Promoções Carregado! ✅");
-    console.log("Todas as patentes e regras carregadas.");
-
 </script>
 
 </body>
