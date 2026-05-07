@@ -16,9 +16,14 @@
                             dark: '#0F1419',
                             card: '#1A202C',
                             red: '#C62828',
-                            yellow: '#FBC02D',
+                            yellow: '#FFEE58',
                             blue: '#1565C0',
-                            gray: '#4A5568'
+                            gray: '#4A5568',
+                            elite: '#6C5CE7',
+                            ouro: '#FFA726',
+                            roxo: '#BA68C8',
+                            verde_claro: '#81C784',
+                            amarelo: '#FFEB3B'
                         }
                     },
                     fontFamily: {
@@ -43,6 +48,10 @@
             .border-active {
                 border-bottom: 2px solid #00A844;
             }
+            .patente-tag {
+                @apply px-3 py-1 rounded-md text-white font-bold text-sm whitespace-nowrap;
+                text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            }
         }
     </style>
 </head>
@@ -57,7 +66,7 @@
                 <span class="bg-eb-green/20 text-eb-green px-2 py-1 rounded text-sm font-medium">EB <i class="fa fa-exchange"></i></span>
             </div>
             <nav class="flex gap-1 md:gap-4">
-                <a href="#" class="nav-link px-3 py-2 rounded-t-md text-gray-400 hover:text-white transition" data-page="dashboard">Dashboard</a>
+                <a href="#" class="nav-link px-3 py-2 rounded-t-md text-gray-400 hover:text-white transition border-active text-white" data-page="dashboard">Dashboard</a>
                 <a href="#" class="nav-link px-3 py-2 rounded-t-md text-gray-400 hover:text-white transition" data-page="promocao">Promoção</a>
                 <a href="#" class="nav-link px-3 py-2 rounded-t-md text-gray-400 hover:text-white transition" data-page="atipica">Atípica</a>
                 <a href="#" class="nav-link px-3 py-2 rounded-t-md text-gray-400 hover:text-white transition" data-page="rebaixamento">Rebaixamento</a>
@@ -87,12 +96,20 @@
                             <span class="font-medium">3006425578</span>
                         </div>
                         <div class="flex justify-between items-center py-2 border-b border-gray-700">
-                            <span class="text-gray-400">Patente</span>
-                            <span class="px-3 py-1 rounded-md text-white font-bold text-sm" style="background-color: #FFA726;">[GEN-BDA] General de Brigada</span>
+                            <span class="text-gray-400">Patente Atual</span>
+                            <span class="patente-tag bg-eb-ouro">[GEN BDA] General de Brigada</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-700">
+                            <span class="text-gray-400">CDP dessa patente</span>
+                            <span class="font-medium text-eb-amarelo">75h</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-700">
+                            <span class="text-gray-400">Horas acumuladas</span>
+                            <span class="font-medium text-eb-green">120h ✅ Cumprido</span>
                         </div>
                         <div class="flex justify-between items-center py-2 border-b border-gray-700">
                             <span class="text-gray-400">Permissão</span>
-                            <span class="font-medium text-eb-green">✅ Verificado</span>
+                            <span class="font-medium text-eb-green">✅ Verificado no Discord</span>
                         </div>
                     </div>
                 </div>
@@ -124,12 +141,13 @@
             </div>
         </section>
 
-        <!-- PÁGINA PROMOÇÃO NORMAL -->
+        <!-- PÁGINA PROMOÇÃO (COM SISTEMA DE CDP) -->
         <section class="pagina hidden" id="pagina-promocao">
             <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-white mb-2">Promoção Normal</h2>
             <p class="text-eb-green text-lg mb-2">Exército Brasileiro</p>
-            <p class="text-gray-400 mb-8">Informe o Roblox ID do alvo para verificar a elegibilidade e realizar a promoção.</p>
+            <p class="text-gray-400 mb-8">Digite o nome ou ID do usuário (verificado no Discord)</p>
 
+            <!-- DADOS DO PROMOTOR -->
             <div class="bg-eb-card rounded-xl p-6 border border-gray-700 mb-6">
                 <div class="space-y-4">
                     <div class="flex justify-between items-center py-2 border-b border-gray-700">
@@ -147,104 +165,66 @@
                 </div>
             </div>
 
+            <!-- CAMPO DE BUSCA -->
             <div class="flex flex-col md:flex-row gap-3 mb-6">
-                <input type="text" placeholder="Roblox ID ou username do alvo" class="flex-1 bg-eb-card border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-eb-green">
-                <button class="bg-eb-blue hover:bg-eb-blue/90 text-white font-medium px-6 py-3 rounded-lg transition whitespace-nowrap">Buscar</button>
+                <input type="text" id="campoBusca" placeholder="Nome ou ID do usuário" class="flex-1 bg-eb-card border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-eb-green">
+                <button class="bg-eb-blue hover:bg-eb-blue/90 text-white font-medium px-6 py-3 rounded-lg transition whitespace-nowrap" id="btnBuscar">Buscar Usuário</button>
             </div>
 
-            <!-- Resultado da busca (aparece depois) -->
+            <!-- RESULTADO COM VERIFICAÇÃO DE CDP -->
             <div class="bg-eb-card rounded-xl p-6 border border-gray-700 hidden" id="resultadoBusca">
-                <h3 class="text-gray-400 text-sm uppercase font-semibold mb-4">Alvo</h3>
-                <div class="space-y-3 mb-6">
-                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
-                        <span class="text-gray-400">Username</span>
-                        <span class="font-medium">minion3adm</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
-                        <span class="text-gray-400">Roblox ID</span>
-                        <span class="font-medium">2996231673</span>
+                <div class="flex items-center gap-4 mb-6">
+                    <img src="https://via.placeholder.com/80" id="fotoPerfil" class="w-20 h-20 rounded-lg border-2 border-eb-green object-cover">
+                    <div>
+                        <h3 class="text-xl font-bold text-white" id="nomeUsuario">calebminio</h3>
+                        <p class="text-gray-400 text-sm">Roblox ID: <span id="idUsuario">3006425578</span></p>
+                        <p class="text-eb-green text-sm mt-1">✅ Verificado no Discord</p>
                     </div>
                 </div>
 
-                <h3 class="text-gray-400 text-sm uppercase font-semibold mb-4">Elegibilidade</h3>
-                <div class="space-y-3 mb-6">
-                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
-                        <span class="text-gray-400">Rank atual</span>
-                        <span class="font-medium">[3º SGT] Terceiro Sargento</span>
+                <!-- INFORMAÇÕES DE CDP E PATENTES -->
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700">
+                        <h4 class="text-gray-400 text-sm font-semibold mb-2">Patente Atual</h4>
+                        <span class="patente-tag bg-eb-verde_claro" id="patenteAtual">[REC] Recruta</span>
+                        <div class="mt-3 space-y-1">
+                            <p class="text-sm text-gray-300">CDP necessário para essa patente: <span class="font-bold text-white">3h</span></p>
+                            <p class="text-sm">Horas que ele já tem: <span id="horasAtuais" class="font-bold text-eb-green">3h</span></p>
+                            <p class="text-sm font-medium text-eb-green mt-1">✅ CDP CUMPRIDO</p>
+                        </div>
                     </div>
-                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
-                        <span class="text-gray-400">Promoção para</span>
-                        <span class="font-medium text-eb-green">[2º SGT] Segundo Sargento</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
-                        <span class="text-gray-400">CDP</span>
-                        <span class="font-medium">146.0h de 20h</span>
+
+                    <div class="bg-eb-green/10 p-4 rounded-lg border border-eb-green/30">
+                        <h4 class="text-eb-green text-sm font-semibold mb-2">Próxima Patente</h4>
+                        <span class="patente-tag bg-eb-verde_claro" id="patenteNova">[SLD] Soldado</span>
+                        <div class="mt-3 space-y-1">
+                            <p class="text-sm text-gray-300">CDP necessário para a próxima: <span class="font-bold text-white">6h</span></p>
+                            <p class="text-sm text-yellow-400">⚠️ Esse CDP só começa a contar DEPOIS de ser promovido!</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="bg-eb-green/20 text-eb-green p-3 rounded-lg font-medium mb-4">✅ Apto para promoção normal.</div>
-                <button class="bg-eb-green hover:bg-eb-green/90 text-white font-bold py-3 px-6 rounded-lg w-full transition">Promover para [2º SGT] Segundo Sargento</button>
+                <!-- STATUS DE APTIDÃO (SÓ LIBERA SE CDP CUMPRIDO) -->
+                <div id="statusContainer" class="p-3 rounded-lg font-medium mb-6 flex items-center gap-2">
+                    <i id="iconeStatus" class="fa fa-check-circle text-lg"></i>
+                    <span id="textoStatus">Apto para promoção! CDP completo ✅</span>
+                </div>
+
+                <!-- BOTÃO DE PROMOÇÃO (SÓ FICA ATIVO SE CDP ESTIVER CERTO) -->
+                <button id="btnPromover" class="bg-eb-green hover:bg-eb-green/90 text-white font-bold py-4 px-6 rounded-lg w-full transition text-lg">
+                    Promover <span id="nomeBotao">calebminio</span> para <span id="patenteBotao">[SLD] Soldado</span>
+                </button>
+
+                <!-- MENSAGEM DE SUCESSO -->
+                <div id="sucessoPromocao" class="hidden bg-eb-blue/20 text-eb-blue p-4 rounded-lg font-medium mt-4 text-center">
+                    🎉 PROMOÇÃO REALIZADA COM SUCESSO!<br>
+                    <span id="textoSucesso">calebminio agora é [SLD] Soldado no Roblox!</span><br>
+                    <span class="text-sm text-yellow-400">ℹ️ Agora ele precisa cumprir 6h de CDP nessa patente para subir novamente</span><br>
+                    <span class="text-sm text-yellow-400">✅ Sincronizado - aparece em 1 minuto!</span>
+                </div>
             </div>
         </section>
 
-        <!-- PÁGINA PROMOÇÃO ATÍPICA -->
+        <!-- OUTRAS PÁGINAS -->
         <section class="pagina hidden" id="pagina-atipica">
-            <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-white mb-2">Promoção Atípica</h2>
-            <p class="text-eb-green text-lg mb-2">Exército Brasileiro</p>
-            <p class="text-gray-400 mb-8">Exclusiva para CGEx e Afiliados. Permite pular ranks até Sócio. Motivo obrigatório.</p>
-
-            <div class="bg-eb-card rounded-xl p-6 border border-gray-700 mb-6">
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
-                        <span class="text-gray-400">Tipo</span>
-                        <span class="bg-eb-yellow/20 text-eb-yellow px-3 py-1 rounded font-bold">MEMBER</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
-                        <span class="text-gray-400">Limite horário</span>
-                        <span class="font-medium text-lg">20 promoções/hora</span>
-                    </div>
-                </div>
-
-                <div class="bg-eb-red/20 text-eb-red p-4 rounded-lg font-medium mt-6">❌ Você não tem permissão para realizar promoções atípicas.</div>
-            </div>
-        </section>
-
-        <!-- PÁGINA REBAIXAMENTO -->
-        <section class="pagina hidden" id="pagina-rebaixamento">
-            <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-white mb-2">Rebaixamento</h2>
-            <p class="text-eb-green text-lg mb-2">Exército Brasileiro</p>
-            <p class="text-gray-400 mb-8">Exclusivo para CR, 2-CR, ADM-G, ADM, CGEx e Afiliados. Motivo obrigatório. Sem validação de CDP ou treinamento.</p>
-
-            <div class="bg-eb-card rounded-xl p-6 border border-gray-700 mb-6">
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
-                        <span class="text-gray-400">Tipo</span>
-                        <span class="bg-eb-red/20 text-eb-red px-3 py-1 rounded font-bold">REBAIXAMENTO</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
-                        <span class="text-gray-400">Perfil</span>
-                        <span class="bg-gray-700 px-3 py-1 rounded font-medium">MEMBER</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
-                        <span class="text-gray-400">Limite horário</span>
-                        <span class="font-medium text-lg">20 operações/hora</span>
-                    </div>
-                </div>
-
-                <div class="bg-eb-red/20 text-eb-red p-4 rounded-lg font-medium mt-6">❌ Você não tem permissão para realizar rebaixamentos.</div>
-            </div>
-        </section>
-
-        <!-- PÁGINA HISTÓRICO -->
-        <section class="pagina hidden" id="pagina-historico">
-            <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-white mb-2">Histórico</h2>
-            <p class="text-eb-green text-lg mb-8">Exército Brasileiro</p>
-            <p class="text-gray-400 mb-4">21689 resultados – página 1 de 1085</p>
-
-            <div class="bg-eb-card rounded-xl border border-gray-700 overflow-x-auto">
-                <table class="w-full text-sm">
-                    <thead class="border-b border-gray-700">
-                        <tr class="text-left text-gray-400">
-                            <th class="p-4 font-semibold">TIPO</th>
-                            <th class="p-4 font-semibold">STATUS</th>
-                            <th class="p-4 font-semibold">SOL
+            <h2 class="text-[clamp(1.8rem,5vw,3rem
